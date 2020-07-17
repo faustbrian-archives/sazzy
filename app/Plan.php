@@ -7,7 +7,9 @@ use JsonSerializable;
 class Plan implements JsonSerializable
 {
     public $attributes;
+
     public $type;
+
     /**
      * The plan's Stripe ID.
      */

@@ -3,6 +3,8 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Response;
+use Illuminate\Routing\Exceptions\InvalidSignatureException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -56,6 +58,10 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+        if ($exception instanceof InvalidSignatureException) {
+            return response()->view('errors.link-expired')->setStatusCode(Response::HTTP_FORBIDDEN);
+        }
+
         return parent::render($request, $exception);
     }
 }
