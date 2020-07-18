@@ -4,10 +4,15 @@ use App\Http\Controllers\Auth\ConfirmPasswordController;
 use App\Http\Controllers\Auth\EmergencyLoginController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\MagicLoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\TokenLoginController;
 use App\Http\Controllers\Auth\VerificationController;
+
+Route::get('login/magic', [MagicLoginController::class, 'showLoginForm'])->name('login.magic');
+Route::post('login/magic', [MagicLoginController::class, 'sendMagicLinkEmail']);
+Route::get('login/magic/{user}', [MagicLoginController::class, 'login'])->name('login.magic.consume');
 
 Route::get('login/token', [TokenLoginController::class, 'showTokenForm']);
 Route::post('login/token', [TokenLoginController::class, 'verifyToken']);
