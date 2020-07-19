@@ -13,8 +13,6 @@ class UpdateTeamPhoto extends Component
 
     public $photo;
 
-    protected $listeners = ['save'];
-
     public function updatedPhoto()
     {
         $this->validate([
