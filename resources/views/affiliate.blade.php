@@ -81,7 +81,7 @@
                 </div>
                 <div class="md:mt-0 md:w-auto flex-1 w-full mt-4">
                     <div class="md:flex-row flex flex-col items-center">
-                        <div class="w-full max-w-xs ml-auto">
+                        <div class="md:max-w-xs w-full ml-auto">
                             <label for="tag" class="sr-only">Tag</label>
                             <div class="relative rounded-md shadow-sm">
                                 <input id="tag" class="form-input sm:text-sm sm:leading-5 block w-full">
@@ -101,7 +101,7 @@
                 </div>
                 <div class="md:mt-0 md:w-auto flex-1 w-full mt-4">
                     <div class="md:flex-row flex flex-col items-center">
-                        <div class="w-full max-w-xs ml-auto">
+                        <div class="md:max-w-xs w-full ml-auto">
                             <label for="paypal" class="sr-only">PayPal Email</label>
                             <div class="relative rounded-md shadow-sm">
                                 <input id="paypal" type="email" class="form-input sm:text-sm sm:leading-5 block w-full">

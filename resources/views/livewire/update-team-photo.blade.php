@@ -1,6 +1,6 @@
 <div class="mb-8 bg-white rounded-lg shadow">
     <div class="sm:p-6 md:flex-row flex flex-col items-center justify-between px-4 py-5">
-        <div>
+        <div class="md:w-auto w-full">
             <h3 class="text-lg font-medium leading-6 text-gray-900">
                 Team Photo
             </h3>

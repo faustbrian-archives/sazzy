@@ -1,6 +1,6 @@
 <div class="mb-8 bg-white rounded-lg shadow">
     <div class="sm:p-6 md:flex-row flex flex-col items-center justify-between px-4 py-5">
-        <div>
+        <div class="md:w-auto w-full">
             <h3 class="text-lg font-medium leading-6 text-gray-900">
                 E-Mail Address
             </h3>
@@ -10,7 +10,7 @@
         </div>
         <div class="md:mt-0 md:w-auto w-full mt-4">
             <form wire:submit.prevent="save" class="md:flex-row flex flex-col items-center">
-                <div class="w-full max-w-xs">
+                <div class="w-full">
                     <label for="email" class="sr-only">E-Mail Address</label>
                     <div class="relative rounded-md shadow-sm">
                         <input id="email" class="form-input sm:text-sm sm:leading-5 block w-full" wire:model="email" />

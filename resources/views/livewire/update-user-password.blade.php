@@ -12,7 +12,7 @@
 
             <div class="md:w-auto w-full">
                 <span class="inline-flex w-full rounded-md shadow-sm">
-                    <button @click="open = true" type="button" class="hover:text-gray-800 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-50 active:text-gray-800 relative w-full px-4 py-2 text-sm font-medium leading-5 text-gray-700 transition duration-150 ease-in bg-white border border-gray-300 rounded-md">
+                    <button @click="open = true" type="button" class="hover:text-gray-800 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-50 active:text-gray-800 md:mt-0 relative w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-gray-700 transition duration-150 ease-in bg-white border border-gray-300 rounded-md">
                         Change Password
                     </button>
                 </span>

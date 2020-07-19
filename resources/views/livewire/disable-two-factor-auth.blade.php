@@ -1,7 +1,7 @@
 <div x-data="{ open: false }" @keydown.window.escape="open = false">
-    <div class="mb-8 overflow-hidden bg-white rounded-lg shadow">
+    <div class="mb-8 bg-white rounded-lg shadow">
         <div class="sm:p-6 md:flex-row flex flex-col items-center justify-between px-4 py-5">
-            <div>
+            <div class="md:w-auto w-full">
                 <h3 class="text-lg font-medium leading-6 text-gray-900">
                     Two Factor Authentication
                 </h3>
@@ -14,7 +14,7 @@
                 <span class="inline-flex w-full rounded-md shadow-sm">
                     {{-- Two-factor authentication can’t be disabled because you belong to 10 organizations that require it. Visit your organization settings page to review which organizations require 2FA. --}}
 
-                    <button @click="open = true" type="button" class="hover:text-gray-800 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-50 active:text-gray-800 relative w-full px-4 py-2 text-sm font-medium leading-5 text-gray-700 transition duration-150 ease-in bg-white border border-gray-300 rounded-md">
+                    <button @click="open = true" type="button" class="hover:text-gray-800 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-50 active:text-gray-800 md:mt-0 relative w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-gray-700 transition duration-150 ease-in bg-white border border-gray-300 rounded-md">
                         Disable
                     </button>
                 </span>
