@@ -7,7 +7,11 @@
     <div class="flex-1 h-full">
         <livewire:update-user-password />
 
-        <livewire:manage-two-factor-auth />
+        @if($currentUser->uses_two_factor_auth)
+            <livewire:disable-two-factor-auth />
+        @else
+            <livewire:enable-two-factor-auth />
+        @endif
 
         <livewire:export-user-data />
     </div>
