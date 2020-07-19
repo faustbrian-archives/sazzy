@@ -8,6 +8,7 @@ use App\Events\TeamDeleted;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Laravel\Cashier\Billable;
+use Spatie\Activitylog\Traits\CausesActivity;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\PersonalDataExport\ExportsPersonalData;
 use Spatie\PersonalDataExport\PersonalDataSelection;
@@ -17,6 +18,7 @@ use Spatie\Sluggable\SlugOptions;
 class Team extends Model implements ExportsPersonalData, HasMedia
 {
     use Billable;
+    use CausesActivity;
     use Concerns\ExportsPersonalData;
     use Concerns\HasPhoto;
     use Concerns\HasTeamInvitations;

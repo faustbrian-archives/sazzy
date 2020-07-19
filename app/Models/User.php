@@ -7,12 +7,14 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Mattiasgeniar\Percentage\Percentage;
+use Spatie\Activitylog\Traits\CausesActivity;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\PersonalDataExport\ExportsPersonalData;
 use Spatie\PersonalDataExport\PersonalDataSelection;
 
 class User extends Authenticatable implements ExportsPersonalData, HasMedia, MustVerifyEmail
 {
+    use CausesActivity;
     use Concerns\ExportsPersonalData;
     use Concerns\HasPhoto;
     use Concerns\HasTeams;
