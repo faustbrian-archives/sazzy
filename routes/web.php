@@ -14,8 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::view('/', 'marketing.index');
+
+Route::view('terms-of-service', 'terms-of-service')->name('terms-of-service');
+Route::view('privacy-policy', 'privacy-policy')->name('privacy-policy');
 
 Route::post('stripe/webhook', [WebhookController::class, 'handleWebhook']);
