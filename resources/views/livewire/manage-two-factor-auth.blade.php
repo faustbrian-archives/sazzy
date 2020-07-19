@@ -13,6 +13,8 @@
             <div class="md:w-auto w-full">
                 <span class="inline-flex w-full rounded-md shadow-sm">
                     @if($this->user->uses_two_factor_auth)
+                        {{-- Two-factor authentication can’t be disabled because you belong to 10 organizations that require it. Visit your organization settings page to review which organizations require 2FA. --}}
+
                         <button wire:click="disableTwoFactorAuth" type="button" class="hover:text-gray-800 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-50 active:text-gray-800 relative w-full px-4 py-2 text-sm font-medium leading-5 text-gray-700 transition duration-150 ease-in bg-white border border-gray-300 rounded-md">
                             Disable
                         </button>
@@ -46,32 +48,38 @@
             </div>
 
             <form wire:submit.prevent="enableTwoFactorAuth">
-                <div class="flex flex-col items-center justify-center mt-4">
-                    <span>
+                <x-alert.info>
+                    We recommend using an application such as <a target="_blank" class="font-bold" href="https://authy.com/">Authy</a>, <a target="_blank" class="font-bold" href="https://1password.com/">1Password</a>, <a target="_blank" class="font-bold" href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2">Google Authenticator</a> or <a target="_blank" class="font-bold" href="https://lastpass.com/auth/">LastPass Authenticator</a>. These applications support secure backup of your authentication codes in the cloud and can be restored if you lose access to your device.
+                </x-alert.info>
+
+                <div class="flex flex-col items-center justify-center my-4">
+                    <span class="border border-gray-200 shadow">
                         {!! Google2FA::getQRCodeInline(config('app.name'), $this->user->email, $secretKey, 200) !!}
                     </span>
+                </div>
 
-                    <span class="text-gray-600">If you can't scan the QR you can also use this code: {{ $secretKey }}</span></div>
+                <x-alert.info>
+                    Scan the image above with the two-factor authentication app on your phone. If you can’t use a barcode, enter <span class="font-bold">{{ $secretKey }}</span> instead.
+                </x-alert.info>
 
-                    <div class="flex flex-col mt-4">
-                        <label class="font-medium">Two Factor Code</label>
-                        <p class="mb-2 text-sm text-gray-600">After you've configured 2FA, enter a code here to verify your integration.</p>
-                        <input type="text" class="form-input flex-1 bg-white" wire:model="otp" />
-                    </div>
+                <div class="flex flex-col mt-4">
+                    <label class="font-medium">Enter the six-digit code from the application</label>
+                    <p class="mb-2 text-sm text-gray-600">After scanning the barcode image, the app will display a six-digit code that you can enter below.</p>
+                    <input type="text" class="form-input flex-1 bg-white" wire:model="otp" />
+                </div>
 
-                    <div class="sm:mt-4 sm:flex sm:flex-row-reverse mt-5">
-                        <span class="sm:ml-3 sm:w-auto flex w-full rounded-md shadow-sm">
-                            <button type="submit" class="hover:bg-teal-500 focus:outline-none focus:border-teal-700 focus:shadow-outline-red sm:text-sm sm:leading-5 inline-flex justify-center w-full px-4 py-2 text-base font-medium leading-6 text-white transition duration-150 ease-in-out bg-teal-600 border border-transparent rounded-md shadow-sm">
-                                Setup 2FA
-                            </button>
-                        </span>
+                <div class="sm:mt-4 sm:flex sm:flex-row-reverse mt-5">
+                    <span class="sm:ml-3 sm:w-auto flex w-full rounded-md shadow-sm">
+                        <button type="submit" class="hover:bg-teal-500 focus:outline-none focus:border-teal-700 focus:shadow-outline-red sm:text-sm sm:leading-5 inline-flex justify-center w-full px-4 py-2 text-base font-medium leading-6 text-white transition duration-150 ease-in-out bg-teal-600 border border-transparent rounded-md shadow-sm">
+                            Setup 2FA
+                        </button>
+                    </span>
 
-                        <span class="sm:mt-0 sm:w-auto flex w-full mt-3 rounded-md shadow-sm">
-                            <button @click="open = false" type="button" class="hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue sm:text-sm sm:leading-5 inline-flex justify-center w-full px-4 py-2 text-base font-medium leading-6 text-gray-700 transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md shadow-sm">
-                                Cancel
-                            </button>
-                        </span>
-                    </div>
+                    <span class="sm:mt-0 sm:w-auto flex w-full mt-3 rounded-md shadow-sm">
+                        <button @click="open = false" type="button" class="hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue sm:text-sm sm:leading-5 inline-flex justify-center w-full px-4 py-2 text-base font-medium leading-6 text-gray-700 transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md shadow-sm">
+                            Cancel
+                        </button>
+                    </span>
                 </div>
             </form>
         </div>
