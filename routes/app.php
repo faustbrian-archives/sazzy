@@ -10,6 +10,7 @@ Route::view('settings/security', 'account-security')->name('security');
 Route::view('settings/api', 'api')->name('api');
 
 Route::view('team', 'team')->name('team');
+Route::view('team/activity', 'team-activity')->name('activity');
 Route::view('team/subscribe', 'subscribe')->name('subscribe');
 Route::view('team/create', 'create-team');
 

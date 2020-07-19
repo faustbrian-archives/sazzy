@@ -25,5 +25,17 @@ class TeamSeeder extends Seeder
         $user->update(['current_team_id' => $team->id]);
 
         $team->createAsStripeCustomer();
+
+        $this->seedActivity($team);
+    }
+
+    private function seedActivity(Team $team): void
+    {
+        for ($i = 0; $i < 10; $i++) {
+            activity()
+                ->causedBy($team->owner)
+                ->performedOn($team)
+                ->log('Added tailwindui to the faustbrian/sazzy repository');
+        }
     }
 }

@@ -26,7 +26,8 @@ class ViewServiceProvider extends ServiceProvider
     public function boot()
     {
         View::composer('*', function ($view) {
-            $view->with('currentUser', Auth::user());
+            $view->with('currentUser', $user = Auth::user());
+            $view->with('currentTeam', $user->currentTeam());
         });
     }
 }
