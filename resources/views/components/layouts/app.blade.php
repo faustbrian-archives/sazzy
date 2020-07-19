@@ -157,5 +157,7 @@
     <script src="{{ mix('/js/app.js') }}"></script>
     @livewireScripts
     @stack('scripts')
+
+    @include('partials.usefathom')
 </body>
 </html>
