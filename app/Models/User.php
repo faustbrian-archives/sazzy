@@ -27,7 +27,7 @@ class User extends Authenticatable implements ExportsPersonalData, HasMedia, Mus
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'last_login_at',
     ];
 
     /**
@@ -45,6 +45,7 @@ class User extends Authenticatable implements ExportsPersonalData, HasMedia, Mus
      * @var array
      */
     protected $casts = [
+        'last_login_at'     => 'datetime',
         'email_verified_at' => 'datetime',
     ];
 
