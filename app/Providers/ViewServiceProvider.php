@@ -27,7 +27,10 @@ class ViewServiceProvider extends ServiceProvider
     {
         View::composer('*', function ($view) {
             $view->with('currentUser', $user = Auth::user());
-            $view->with('currentTeam', $user->currentTeam());
+
+            if ($user) {
+                $view->with('currentTeam', $user->currentTeam());
+            }
         });
     }
 }
