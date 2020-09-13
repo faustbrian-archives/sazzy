@@ -13,6 +13,7 @@
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.0",
+        "laravel/horizon": "^5.0",
         "laravel/jetstream": "^1.1",
         "laravel/nova": "^3.9",
         "laravel/sanctum": "^2.6",
@@ -64,6 +65,7 @@
         ],
         "post-update-cmd": [
             "@php artisan telescope:publish --ansi",
+            "@php artisan horizon:publish --ansi",
             "@php artisan nova:publish"
         ]
     },
