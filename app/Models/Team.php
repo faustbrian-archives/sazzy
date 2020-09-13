@@ -2,75 +2,40 @@
 
 namespace App\Models;
 
-use App\Events\DeletingTeam;
-use App\Events\TeamCreated;
-use App\Events\TeamDeleted;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Laravel\Cashier\Billable;
-use Spatie\Activitylog\Traits\CausesActivity;
-use Spatie\Activitylog\Traits\LogsActivity;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\PersonalDataExport\ExportsPersonalData;
-use Spatie\PersonalDataExport\PersonalDataSelection;
-use Spatie\Sluggable\HasSlug;
-use Spatie\Sluggable\SlugOptions;
+use Laravel\Jetstream\Events\TeamCreated;
+use Laravel\Jetstream\Events\TeamDeleted;
+use Laravel\Jetstream\Events\TeamUpdated;
+use Laravel\Jetstream\Team as JetstreamTeam;
 
-class Team extends Model implements ExportsPersonalData, HasMedia
+class Team extends JetstreamTeam
 {
-    use Billable;
-    use CausesActivity;
-    use Concerns\ExportsPersonalData;
-    use Concerns\HasPhoto;
-    use Concerns\HasTeamInvitations;
-    use Concerns\HasTeamMembers;
-    use HasSlug;
-    use LogsActivity;
-
-    protected $fillable = ['user_id', 'name', 'slug', 'photo'];
-
-    protected $casts = ['user_id' => 'integer'];
-
-    protected $dispatchesEvents = [
-        'created'  => TeamCreated::class,
-        'deleted'  => TeamDeleted::class,
-        'deleting' => DeletingTeam::class,
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'personal_team' => 'boolean',
     ];
 
-    public function owner(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'user_id');
-    }
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name',
+        'personal_team',
+    ];
 
-    public function purge(): void
-    {
-        $this
-            ->members()
-            ->where('current_team_id', $this->id)
-            ->update(['current_team_id' => null]);
-
-        $this->members()->detach();
-
-        $this->delete();
-    }
-
-    public function getEmailAttribute(): string
-    {
-        return $this->owner->email;
-    }
-
-    public static function findByslug(string $slug): self
-    {
-        return static::where('slug', $slug)->firstOrFail();
-    }
-
-    public function getSlugOptions(): SlugOptions
-    {
-        return SlugOptions::create()->generateSlugsFrom('name')->saveSlugsTo('slug');
-    }
-
-    public function selectPersonalData(PersonalDataSelection $personalData): void
-    {
-        $personalData->add('user.json', ['name' => $this->name, 'email' => $this->email]);
-    }
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'created' => TeamCreated::class,
+        'updated' => TeamUpdated::class,
+        'deleted' => TeamDeleted::class,
+    ];
 }

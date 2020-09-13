@@ -1,43 +1,43 @@
-<x-layouts.auth>
-    <x-slot name="header">
-        Welcome to {{ config('app.name') }}
-    </x-slot>
+<x-guest-layout>
+    <x-jet-authentication-card>
+        <x-slot name="logo">
+            <x-jet-authentication-card-logo />
+        </x-slot>
 
-    <p class="text-sm leading-5 text-center text-gray-600">
-        Enter your details and you will be able to invite co-workers to your team later for collaboration.
-    </p>
+        <x-jet-validation-errors class="mb-4" />
 
-    <form class="mt-6" action="{{ route('register') }}" method="POST">
-        @csrf
+        <form method="POST" action="{{ route('register') }}">
+            @csrf
 
-        <div>
-            <x-input.group type="text" name="team" label="Team Name" />
-        </div>
+            <div>
+                <x-jet-label value="Name" />
+                <x-jet-input class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+            </div>
 
-        <div class="mt-6">
-            <x-input.group type="text" name="name" label="Your Name" />
-        </div>
+            <div class="mt-4">
+                <x-jet-label value="Email" />
+                <x-jet-input class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
+            </div>
 
-        <div class="mt-6">
-            <x-input.group type="email" name="email" label="E-Mail address" />
-        </div>
+            <div class="mt-4">
+                <x-jet-label value="Password" />
+                <x-jet-input class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
+            </div>
 
-        <div class="mt-6">
-            <x-input.group type="password" name="password" label="Password" />
-        </div>
+            <div class="mt-4">
+                <x-jet-label value="Confirm Password" />
+                <x-jet-input class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
+            </div>
 
-        <div class="mt-6">
-            <x-input.group type="password" name="password_confirmation" label="Confirm Password" />
-        </div>
+            <div class="flex items-center justify-end mt-4">
+                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
+                    {{ __('Already registered?') }}
+                </a>
 
-        <p class="mt-6 text-xs leading-5 text-center text-gray-600">
-            By signing up, you agree to the <a href="#" class="underline">Terms of Service</a> and <a href="#" class="underline">Privacy Policy</a> of {{ config('app.name') }}.
-        </p>
-
-        <div class="mt-6">
-            <button type="submit" class="group hover:bg-gray-700 focus:outline-none focus:border-gray-700 focus:shadow-outline-gray active:bg-gray-700 relative flex justify-center w-full px-4 py-2 text-sm font-medium text-white transition duration-150 ease-in-out bg-gray-800 border border-transparent rounded-md">
-                Register
-            </button>
-        </div>
-    </form>
-</x-layouts.auth>
+                <x-jet-button class="ml-4">
+                    {{ __('Register') }}
+                </x-jet-button>
+            </div>
+        </form>
+    </x-jet-authentication-card>
+</x-guest-layout>

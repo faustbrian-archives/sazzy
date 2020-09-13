@@ -3,9 +3,6 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Http\Response;
-use Illuminate\Routing\Exceptions\InvalidSignatureException;
-use Throwable;
 
 class Handler extends ExceptionHandler
 {
@@ -29,39 +26,12 @@ class Handler extends ExceptionHandler
     ];
 
     /**
-     * Report or log an exception.
-     *
-     * @param \Throwable $exception
-     *
-     * @throws \Exception
+     * Register the exception handling callbacks for the application.
      *
      * @return void
      */
-    public function report(Throwable $exception)
+    public function register()
     {
-        if (app()->bound('sentry') && $this->shouldReport($exception)) {
-            app('sentry')->captureException($exception);
-        }
-
-        parent::report($exception);
-    }
-
-    /**
-     * Render an exception into an HTTP response.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \Throwable               $exception
-     *
-     * @throws \Throwable
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function render($request, Throwable $exception)
-    {
-        if ($exception instanceof InvalidSignatureException) {
-            return response()->view('errors.link-expired')->setStatusCode(Response::HTTP_FORBIDDEN);
-        }
-
-        return parent::render($request, $exception);
+        //
     }
 }

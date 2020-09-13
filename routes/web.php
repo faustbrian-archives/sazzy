@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\WebhookController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,9 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::view('/', 'marketing.index');
+Route::get('/', function () {
+    return view('welcome');
+});
 
-Route::view('terms-of-service', 'terms-of-service')->name('terms-of-service');
-Route::view('privacy-policy', 'privacy-policy')->name('privacy-policy');
-
-Route::post('stripe/webhook', [WebhookController::class, 'handleWebhook']);
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');

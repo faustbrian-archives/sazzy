@@ -2,24 +2,22 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Fortify\TwoFactorAuthenticatable;
+use Laravel\Jetstream\HasProfilePhoto;
+use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
-use Mattiasgeniar\Percentage\Percentage;
-use Spatie\Activitylog\Traits\CausesActivity;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\PersonalDataExport\ExportsPersonalData;
-use Spatie\PersonalDataExport\PersonalDataSelection;
 
-class User extends Authenticatable implements ExportsPersonalData, HasMedia, MustVerifyEmail
+class User extends Authenticatable
 {
-    use CausesActivity;
-    use Concerns\ExportsPersonalData;
-    use Concerns\HasPhoto;
-    use Concerns\HasTeams;
     use HasApiTokens;
+    use HasFactory;
+    use HasProfilePhoto;
+    use HasTeams;
     use Notifiable;
+    use TwoFactorAuthenticatable;
 
     /**
      * The attributes that are mass assignable.
@@ -27,7 +25,7 @@ class User extends Authenticatable implements ExportsPersonalData, HasMedia, Mus
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'last_login_at',
+        'name', 'email', 'password',
     ];
 
     /**
@@ -36,7 +34,10 @@ class User extends Authenticatable implements ExportsPersonalData, HasMedia, Mus
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
+        'two_factor_recovery_codes',
+        'two_factor_secret',
     ];
 
     /**
@@ -45,45 +46,15 @@ class User extends Authenticatable implements ExportsPersonalData, HasMedia, Mus
      * @var array
      */
     protected $casts = [
-        'last_login_at'     => 'datetime',
         'email_verified_at' => 'datetime',
     ];
 
-    public function referrals()
-    {
-        return $this->hasMany(self::class, 'referred_by', 'affiliate_tag');
-    }
-
-    public function getReferralBalance() : int
-    {
-        $teams = $this->referrals->flatMap->teams;
-
-        return Percentage::of(
-            config('sazzy.affiliate.commissionPercentage'),
-            $teams
-                ->map(fn (Team $team) => $team->invoices(false, ['created' => ['gte' => optional($this->cashed_out_at)->timestamp]]))
-                ->flatten()
-                ->map(fn (\Stripe\Invoice $invoice) => $invoice->subtotal)
-                ->sum()
-        );
-    }
-
-    public function getTotalReferralBalance() : int
-    {
-        $teams = $this->referrals->flatMap->teams;
-
-        return Percentage::of(
-            config('sazzy.affiliate.commissionPercentage'),
-            $teams
-                ->map(fn (Team $team) => $team->invoices(false))
-                ->flatten()
-                ->map(fn (\Stripe\Invoice $invoice) => $invoice->subtotal)
-                ->sum()
-        );
-    }
-
-    public function selectPersonalData(PersonalDataSelection $personalData): void
-    {
-        $personalData->add('user.json', ['name' => $this->name, 'email' => $this->email]);
-    }
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'profile_photo_url',
+    ];
 }

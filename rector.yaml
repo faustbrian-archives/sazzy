@@ -1,7 +1,0 @@
-parameters:
-  php_version_features: "7.4"
-  sets:
-    - code-quality
-services:
-  Rector\Php74\Rector\Closure\ClosureToArrowFunctionRector: ~
-  Rector\Php74\Rector\Property\TypedPropertyRector: ~
